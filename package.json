@@ -9,6 +9,10 @@
   "dependencies": {
     "@lightningjs/core": "^2.6.0",
     "@lightningjs/sdk": "^4.8.3",
+    "@lightningjs/ui": "^1.2.5",
+    "@reduxjs/toolkit": "^1.8.1",
+    "dotenv": "^16.0.0",
+    "dotenv-webpack": "^7.1.0",
     "ts-loader": "^9.3.0",
     "typescript": "^4.6.4",
     "webpack": "^5.72.0",
