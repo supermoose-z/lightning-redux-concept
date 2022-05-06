@@ -5,9 +5,6 @@
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
-dist/*
-!dist/index.html
-!dist/fonts/Roboto-Regular.ttf
 yarn-error.log
 node_modules
 .DS_Store
