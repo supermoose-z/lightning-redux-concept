@@ -1,9 +1,13 @@
 
-import Lightning from "@lightningjs/core";
+import { Img, Router } from "@lightningjs/sdk";
 import { ReduxAwareComponent } from "./ReduxAwareComponent";
 
 import { fetchMovieDetails } from "../store/moviesSlice";
 import { OmdbMovie } from "../store/models";
+import { MovieDetailsPoster } from "./MovieDetailsPoster";
+import { MovieDetailsInfo } from "./MovieDetailsInfo";
+
+import { StageSize } from "./const";
 
 export class MovieDetails extends ReduxAwareComponent
 {
@@ -12,6 +16,15 @@ export class MovieDetails extends ReduxAwareComponent
     static _template()
     {
         return {
+            BG: {
+                visible: false,
+                x: 0,
+                y: 0,
+                w: StageSize.width,
+                h: StageSize.height,
+                alpha: 0.25,
+            },
+
             Loading: {
                 x: 10,
                 y: 10,
@@ -24,15 +37,22 @@ export class MovieDetails extends ReduxAwareComponent
             },
 
             MovieDetails: {
-                x: 10,
-                y: 10,
+                x: 20,
+                y: 20,
                 visible: false,
-                text: {
-                    fontSize: 24,
-                    text: '',
-                    textColor: 0xFFFFFFFF,
+                flex: { direction: 'row' },
+
+                Poster: {
+                    type: MovieDetailsPoster,
+                    flexItem: {
+                        marginRight: 40,
+                    }
+                },
+
+                Info: {
+                    type: MovieDetailsInfo,
                 }
-            }
+            },
         }
     }
 
@@ -44,12 +64,11 @@ export class MovieDetails extends ReduxAwareComponent
             {
                 $enter(event)
                 {
-                    console.log('enter???');
-
                     this.tag('Loading').patch({ visible: true });
                     this.patch({
                         //Loading: { visible: true, },
-                        MovieDetails: { visible: false, }
+                        MovieDetails: { visible: false },
+                        BG: { visible: false },
                     });
                 }
             },
@@ -59,14 +78,17 @@ export class MovieDetails extends ReduxAwareComponent
                 $enter()
                 {
                     const movie = this.state.movies.movieDetails as OmdbMovie;
-
+                    let texture = Img(movie.Poster).cover(StageSize.width, StageSize.height);
+                    texture.options.type = 'cover'; 
+        
                     this.patch({
                         Loading: { visible: false, },
                         MovieDetails: {
                             visible: true, 
-                            text: {
-                                text: `Movie loaded: ${movie.Title}`,
-                            }
+                        },
+                        BG: {
+                            visible: true,
+                            texture,
                         }
                     });
                 }
@@ -89,6 +111,7 @@ export class MovieDetails extends ReduxAwareComponent
     {
         super._enable();
 
+        // load movie details when displaying view
         this.store.dispatch(fetchMovieDetails(this.movieId));
     }
 
@@ -96,13 +119,23 @@ export class MovieDetails extends ReduxAwareComponent
     {
         const state = this.state.movies;
 
-        if (state.movieDetails)
-            // @ts-ignore
-            this._setState('DetailsState');
-        else
+        if (state.movieLoading)
             // @ts-ignore
             this._setState('LoadingState');
+        else if (state.movieDetails)
+            // @ts-ignore
+            this._setState('DetailsState');
     }
-    
+ 
+    _handleBack()
+    {
+        console.log('back?');
+        
+        if (Router.getHistory().length == 0)
+            Router.navigate('home', {}, null);
+        else
+            Router.back();
+    }
+
 }
 

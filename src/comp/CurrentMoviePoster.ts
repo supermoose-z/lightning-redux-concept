@@ -73,7 +73,7 @@ export class CurrentMoviePoster extends ReduxAwareComponent
             let texture = Img(movie.poster).cover(StageSize.width, StageSize.height);
             texture.options.type = 'cover'; 
 
-            // set bg texture
+            // swap bg textures to enable cross fade effect
             this.tag('BgImage').patch({
                 texture: poster.texture,
             });

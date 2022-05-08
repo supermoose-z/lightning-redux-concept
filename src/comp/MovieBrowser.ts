@@ -1,11 +1,11 @@
 
 
-import { fetchMovies } from '../store/moviesSlice';
-import { ReduxAwareComponent } from './ReduxAwareComponent';
+import Lightning from '@lightningjs/core';
+
 import { MovieList } from './MovieList';
 import { CurrentMoviePoster } from './CurrentMoviePoster';
 
-export class MovieBrowser extends ReduxAwareComponent
+export class MovieBrowser extends Lightning.Component
 {
     static _template()
     {
@@ -24,19 +24,9 @@ export class MovieBrowser extends ReduxAwareComponent
                 y: 10,
                 w: 1280,
                 h: 400,
-                itemWidth: 1280 / 5,
+                itemWidth: 256,
             }
         }
-    }
-
-    // don't need to respond to any state changes in this component
-    get connectToStore(): boolean {
-        return false;
-    }
-
-    _setup() 
-    {
-        this.store.dispatch(fetchMovies());
     }
 
     _getFocused()

@@ -35,6 +35,11 @@ export class MovieList extends ReduxAwareComponent
         this._currentIndex = 0;
     }
 
+    _enable()
+    {
+        this._refreshMovies();
+    }
+
     _gotoIndex(index)
     {
         var items = this.tag('Wrapper');
@@ -60,9 +65,6 @@ export class MovieList extends ReduxAwareComponent
 
         // set specified movie
         this.store.dispatch(setCurrentMovie(this._movies[this._currentIndex]));
-
-        //store.setSelectedMovie(this._movies[this._currentIndex].id);
-        //MoviesContainer.dispatch('setSelectedMovie', { id: this._movies[this._currentIndex].id });
     }
 
     _handleLeft()
@@ -75,12 +77,6 @@ export class MovieList extends ReduxAwareComponent
         this._gotoIndex(this._currentIndex+1);
     }
 
-    _handleEnter()
-    {
-        var movie = this._movies[this._currentIndex];
-        Router.navigate(`details/${movie.id}`, {}, null);
-    }
-
     _getFocused()
     {
         return this.tag('Wrapper').childList.getAt(this._currentIndex);
@@ -88,11 +84,12 @@ export class MovieList extends ReduxAwareComponent
 
     _storeUpdate()
     {
-        this.setMovies(this.state.movies.movieList);
+        this._refreshMovies();
     }
 
-    setMovies(movies:[Movie?])
+    _refreshMovies()
     {
+        var movies = this.state.movies.movieList;
         var wrapper = this.tag('Wrapper');
         var items = wrapper.childList;
         var itemWidth = this.itemWidth;

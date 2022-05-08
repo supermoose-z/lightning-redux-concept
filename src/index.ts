@@ -2,8 +2,6 @@
 import { Launch } from "@lightningjs/sdk";
 import { MainApp } from "./comp/MainApp";
 
-import { store } from './store';
-
 const options = {
     stage: {
         w: 1280,

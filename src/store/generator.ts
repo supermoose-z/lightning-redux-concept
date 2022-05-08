@@ -48,10 +48,10 @@ export function createReduxAwareClass(store)
 
         _enable()
         {
-            super._enable();
-
             if (this.connectToStore)
                 this._unsub = store.subscribe(this._storeUpdate.bind(this));
+
+            super._enable();
         }
 
         _disable()

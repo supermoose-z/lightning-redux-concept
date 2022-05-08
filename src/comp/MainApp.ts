@@ -5,10 +5,18 @@ import { MovieBrowser } from './MovieBrowser';
 import { MovieDetails } from './MovieDetails';
 
 import { store } from '../store';
+import { fetchMovies } from '../store/moviesSlice';
 
 const routes = {
     root: 'home',
     
+    // preload movie list on boot
+    boot: () => {
+        return new Promise((resolve, reject) => {
+            store.dispatch(fetchMovies()).then(() => resolve(undefined));
+        });
+    },
+
     routes: [
         {
             path: 'home',

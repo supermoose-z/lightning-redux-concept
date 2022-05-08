@@ -1,5 +1,6 @@
 
 import Lightning from '@lightningjs/core';
+import { Router } from '@lightningjs/sdk';
 import { Movie } from '../store/models';
 import { clamp } from '../utils/math';
 
@@ -68,5 +69,10 @@ export class MovieListItem extends Lightning.Component
                     
         this.tag('Item').setSmooth('scale', scale, { duration: 1 });
         this.tag('Item').setSmooth('shader.rx', angle, { duration: 1 });
+    }
+
+    _handleEnter()
+    {
+        Router.navigate(`details/${this.movie.id}`, {}, null);
     }
 }
