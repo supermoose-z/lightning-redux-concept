@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "build": "webpack",
+    "watch-tizen": "CONFIG_OPTION=tizenConfig webpack --watch"
   },
   "dependencies": {
     "@lightningjs/core": "^2.6.0",

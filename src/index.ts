@@ -4,8 +4,8 @@ import { MainApp } from "./comp/MainApp";
 
 const options = {
     stage: {
-        w: 1280,
-        h: 720,
+        w: 1920,
+        h: 1080,
         precision: 1,
     }
 }
@@ -15,10 +15,20 @@ const config = {
 		"stage": {
 			"clearColor": "0xFF000000",
 			"useImageWorker": true,
-			"w": 1280,
-			"h": 720
+			"w": 1920,
+			"h": 1080
 		},
-		"debug": false
+		"debug": false,
+		"keys": {
+			8: "Back",
+			13: "Enter",
+			27: "Exit",
+			37: "Left",
+			38: "Up",
+			39: "Right",
+			40: "Down",
+			10009: "Back"
+		},
 	},
 	"platformSettings": {
 		"path": "./",

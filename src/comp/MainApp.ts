@@ -41,4 +41,9 @@ export class MainApp extends Router.App
     {
         Router.startRouter(routes, undefined);
     }
+
+    _handleKey(event)
+    {
+        console.log(`Key pressed which, ${event.which}`);
+    }
 }
