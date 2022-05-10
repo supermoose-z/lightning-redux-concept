@@ -1,8 +1,9 @@
 
 import Lightning from '@lightningjs/core';
 import { ReduxAwareComponent } from './ReduxAwareComponent';
+import { StateComponent } from './StateComponent';
 
-export class MovieDetailsPoster extends ReduxAwareComponent
+export class MovieDetailsPoster extends StateComponent
 {
     static _template()
     {
@@ -31,7 +32,7 @@ export class MovieDetailsPoster extends ReduxAwareComponent
 
         super._enable();
 
-        movie = this.state.movies.movieDetails;
+        movie = this.state.movieDetails;
 
         this.tag('Image').patch({
             src: movie.Poster,

@@ -1,15 +1,16 @@
 
 import { Img, Router } from "@lightningjs/sdk";
 import { ReduxAwareComponent } from "./ReduxAwareComponent";
+import { StateComponent } from "./StateComponent";
 
-import { fetchMovieDetails } from "../store/moviesSlice";
+//import { fetchMovieDetails } from "../store/moviesSlice";
 import { OmdbMovie } from "../store/models";
 import { MovieDetailsPoster } from "./MovieDetailsPoster";
 import { MovieDetailsInfo } from "./MovieDetailsInfo";
 
 import { StageSize } from "./const";
 
-export class MovieDetails extends ReduxAwareComponent
+export class MovieDetails extends StateComponent
 {
     movieId: string;
 
@@ -77,7 +78,7 @@ export class MovieDetails extends ReduxAwareComponent
             {
                 $enter()
                 {
-                    const movie = this.state.movies.movieDetails as OmdbMovie;
+                    const movie = this.state.movieDetails;
                     let texture = Img(movie.Poster).cover(StageSize.width, StageSize.height);
                     texture.options.type = 'cover'; 
         
@@ -103,26 +104,30 @@ export class MovieDetails extends ReduxAwareComponent
 
     _init()
     {
-        // @ts-ignore
-        this._setState('LoadingState');
+        // connect subscription
+        this.subscribe(
+            (state) => state.movieLoading,
+            (loading) => this._toggleLoading(loading)
+        );
     }
 
     _enable()
     {
         super._enable();
 
-        // load movie details when displaying view
-        this.store.dispatch(fetchMovieDetails(this.movieId));
+        // @ts-ignore
+        this._setState('LoadingState');
+
+        // load movie details
+        this.$store.fetchMovieDetails(this.movieId);
     }
 
-    _storeUpdate()
+    _toggleLoading(loading)
     {
-        const state = this.state.movies;
-
-        if (state.movieLoading)
+        if (loading)
             // @ts-ignore
             this._setState('LoadingState');
-        else if (state.movieDetails)
+        else if (this.$store.state.movieDetails)
             // @ts-ignore
             this._setState('DetailsState');
     }

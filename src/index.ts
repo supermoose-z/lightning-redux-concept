@@ -2,10 +2,12 @@
 import { Launch } from "@lightningjs/sdk";
 import { MainApp } from "./comp/MainApp";
 
+import { StageSize } from "./comp/const";
+
 const options = {
     stage: {
-        w: 1920,
-        h: 1080,
+        w: StageSize.width,
+        h: StageSize.height,
         precision: 1,
     }
 }
@@ -15,8 +17,8 @@ const config = {
 		"stage": {
 			"clearColor": "0xFF000000",
 			"useImageWorker": true,
-			"w": 1920,
-			"h": 1080
+			"w": StageSize.width,
+			"h": StageSize.height,
 		},
 		"debug": false,
 		"keys": {

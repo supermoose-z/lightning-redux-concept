@@ -1,8 +1,9 @@
 
 import { OmdbMovie } from '../store/models';
 import { ReduxAwareComponent } from './ReduxAwareComponent';
+import { StateComponent } from './StateComponent';
 
-export class MovieDetailsInfo extends ReduxAwareComponent
+export class MovieDetailsInfo extends StateComponent
 {
     static _template()
     {
@@ -39,17 +40,13 @@ export class MovieDetailsInfo extends ReduxAwareComponent
         }
     }
 
-    get connectToStore(): boolean {
-        return false;
-    }
-
     _enable()
     {
         var movie: OmdbMovie;
 
         super._enable();
 
-        movie = this.state.movies.movieDetails;
+        movie = this.state.movieDetails;
 
         this._setItemText('Title', movie.Title);
         this._setItemText('ReleaseInfo', `${movie.Runtime}, Released: ${movie.Released}`);

@@ -4,8 +4,8 @@ import { Utils, Router } from '@lightningjs/sdk'
 import { MovieBrowser } from './MovieBrowser';
 import { MovieDetails } from './MovieDetails';
 
-import { store } from '../store';
-import { fetchMovies } from '../store/moviesSlice';
+import { appStore } from '../store';
+//import { fetchMovies } from '../store/moviesSlice';
 
 const routes = {
     root: 'home',
@@ -13,7 +13,8 @@ const routes = {
     // preload movie list on boot
     boot: () => {
         return new Promise((resolve, reject) => {
-            store.dispatch(fetchMovies()).then(() => resolve(undefined));
+            appStore.fetchMovieList().then(() => resolve(undefined));
+            //store.dispatch(fetchMovies()).then(() => resolve(undefined));
         });
     },
 

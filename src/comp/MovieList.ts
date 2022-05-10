@@ -3,10 +3,11 @@ import { Lightning, Router } from '@lightningjs/sdk';
 import { Movie } from '../store/models';
 import { MovieListItem } from './MovieListItem';
 import { ReduxAwareComponent } from './ReduxAwareComponent';
+import { StateComponent } from './StateComponent';
 
 import { setCurrentMovie } from '../store/moviesSlice';
 
-export class MovieList extends ReduxAwareComponent
+export class MovieList extends StateComponent
 {
     _movies: [Movie?];
     _scrollAnchor: number;
@@ -64,7 +65,8 @@ export class MovieList extends ReduxAwareComponent
         }
 
         // set specified movie
-        this.store.dispatch(setCurrentMovie(this._movies[this._currentIndex]));
+        //this.store.dispatch(setCurrentMovie(this._movies[this._currentIndex]));
+        this.$store.setCurrentMovie(this._movies[this._currentIndex]);
     }
 
     _handleLeft()
@@ -89,7 +91,7 @@ export class MovieList extends ReduxAwareComponent
 
     _refreshMovies()
     {
-        var movies = this.state.movies.movieList;
+        var movies = this.state.movieList;
         var wrapper = this.tag('Wrapper');
         var items = wrapper.childList;
         var itemWidth = this.itemWidth;

@@ -1,12 +1,13 @@
 
 import Lightning from '@lightningjs/core';
 import { Img, Utils, Colors } from "@lightningjs/sdk";
-import { Movie } from '../store/models';
+import { Movie, OmdbMovie } from '../store/models';
 
 import { ReduxAwareComponent } from './ReduxAwareComponent';
+import { StateComponent } from './StateComponent';
 import { StageSize } from './const';
 
-export class CurrentMoviePoster extends ReduxAwareComponent
+export class CurrentMoviePoster extends StateComponent
 {
     titleAnim: any;
     posterAnim: any;
@@ -55,11 +56,11 @@ export class CurrentMoviePoster extends ReduxAwareComponent
         }
     }
 
-    _updatePoster()
+    _updatePoster(movie: Movie)
     {
         var poster = this.tag('PosterImage');
         var title = this.tag('Title');
-        var movie = this.state.movies.currentMovie;
+        //var movie = this.$store.state.currentMovie;
 
         // if the incoming movie is null
         if (movie == null)
@@ -125,9 +126,11 @@ export class CurrentMoviePoster extends ReduxAwareComponent
                 }
             ]
         });
+
+        this.subscribe(
+            (state) => state.currentMovie,
+            (movie) => this._updatePoster(movie)
+        );
     }
 
-    _storeUpdate(): void {
-        this._updatePoster();
-    }
 }
